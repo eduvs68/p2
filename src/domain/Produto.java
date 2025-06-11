@@ -8,6 +8,8 @@ public class Produto {
     private String precoCompra;
     private String qtdEstoque;
     private String estoqueMin;
+    private Categoria categoria;
+    private Fornecedor fornecedor;
 
     public Produto(Integer id, String nome, Integer gtin, String precoVenda, String precoCompra, String qtdEstoque, String estoqueMin) {
         this.id = id;
@@ -17,6 +19,8 @@ public class Produto {
         this.precoCompra = precoCompra;
         this.qtdEstoque = qtdEstoque;
         this.estoqueMin = estoqueMin;
+        this.categoria = categoria;
+        this.fornecedor = fornecedor;
     }
 
     public Integer getId() {
@@ -75,5 +79,22 @@ public class Produto {
         this.estoqueMin = estoqueMin;
     }
 
+    public Categoria getCategoria() {
+        return Categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Fornecedor getFornecedor() {
+        return Fornecedor;
+    }
+
+    public void setFornecedor(Fornecedor fornecedor) {
+        this.fornecedor = fornecedor;
+    }
+
     public void mostrar() {}
+
 }

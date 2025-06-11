@@ -1,19 +1,19 @@
 package domain;
 
 public class Categoria {
-    private String idCategoria;
+    private Integer idCategoria;
     private String nome;
 
-    public Categoria(String idCategoria, String nome) {
+    public Categoria(Integer idCategoria, String nome) {
         this.idCategoria = idCategoria;
         this.nome = nome;
     }
 
-    public String getIdCategoria() {
+    public Integer getIdCategoria() {
         return idCategoria;
     }
 
-    public void setIdCategoria(String idCategoria) {
+    public void setIdCategoria(Integer idCategoria) {
         this.idCategoria = idCategoria;
     }
 
@@ -24,6 +24,4 @@ public class Categoria {
     public void setNome(String nome) {
         this.nome = nome;
     }
-
-    public void mostrar() {}
 }
