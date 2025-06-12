@@ -83,7 +83,7 @@ public class AjusteEstoqueView extends JFrame {
         else
             produto.setQtdEstoque(produto.getQtdEstoque() - qtd);
 
-        new ProdutoDAO().inserir(produto); // pode trocar por update
+        new ProdutoDAO().atualizarEstoque(produto); // pode trocar por update
 
         JOptionPane.showMessageDialog(this, "Ajuste realizado com sucesso!");
         dispose();

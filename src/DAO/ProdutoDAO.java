@@ -30,6 +30,19 @@ public class ProdutoDAO {
         }
     }
 
+    public void atualizarEstoque(Produto p) {
+        String sql = "UPDATE Produto SET qtdEstoque = ? WHERE idProduto = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, p.getQtdEstoque());
+            stmt.setInt(2, p.getIdProduto());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar estoque: " + e.getMessage());
+        }
+    }
+
+
     public List<Produto> listar() {
         List<Produto> lista = new ArrayList<>();
         String sql = "SELECT * FROM Produto";
@@ -60,6 +73,24 @@ public class ProdutoDAO {
         }
         return lista;
     }
+
+    public boolean excluirComVerificacao(int idProduto) {
+        String sql = "DELETE FROM Produto WHERE idProduto = ?";
+        try (Connection conn = Conexao.conectar();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idProduto);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            if (e.getMessage().contains("foreign key constraint fails")) {
+                return false;
+            } else {
+                System.out.println("Erro ao excluir produto: " + e.getMessage());
+                return false;
+            }
+        }
+    }
+
 
     public Produto buscarPorId(int idProduto) {
         String sql = "SELECT * FROM Produto WHERE idProduto = ?";

@@ -84,7 +84,7 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto: " + nome + " (código de barras:" + gtin + ")";
+        return "Produto: " + nome + " (código de barras:" + gtin + ")" + "ID: " + idProduto;
     }
 
 }

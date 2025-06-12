@@ -20,6 +20,12 @@ public class MainView extends JFrame {
         btnAjuste.setBounds(100, 80, 200, 30);
         add(btnAjuste);
 
+        JButton btnExcluir = new JButton("Excluir Produto");
+        btnExcluir.setBounds(100, 130, 200, 30);
+        add(btnExcluir);
+        btnExcluir.addActionListener(e -> new ExcluirProdutoView());
+
+
         btnProdutos.addActionListener(e -> new ProdutoView());
         btnAjuste.addActionListener(e -> new AjusteEstoqueView());
 
