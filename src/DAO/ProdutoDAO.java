@@ -82,7 +82,9 @@ public class ProdutoDAO {
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
-            if (e.getMessage().contains("foreign key constraint fails")) {
+            int errorCode = e.getErrorCode();
+            if (errorCode == 1451) { // Código específico do MySQL para violação de FK (restrição ON DELETE)
+                System.out.println("Não é possível excluir o produto: ele está vinculado a outra tabela.");
                 return false;
             } else {
                 System.out.println("Erro ao excluir produto: " + e.getMessage());
