@@ -9,21 +9,11 @@ public class FormaPagamento {
         this.tipo = tipo;
     }
 
-    public Integer getIdFormaPagamento() {
-        return idFormaPagamento;
-    }
+    public Integer getIdFormaPagamento() {return idFormaPagamento;}
+    public void setIdFormaPagamento(Integer idFormaPagamento) {this.idFormaPagamento = idFormaPagamento;}
 
-    public void setIdFormaPagamento(Integer idFormaPagamento) {
-        this.idFormaPagamento = idFormaPagamento;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
+    public String getTipo() {return tipo;}
+    public void setTipo(String tipo) {this.tipo = tipo;}
 
     public void mostrar() {}
 

@@ -1,18 +1,18 @@
 package domain;
 
 public class Produto {
-    private Integer id;
+    private Integer idProduto;
     private String nome;
-    private Integer gtin;
-    private String precoVenda;
-    private String precoCompra;
-    private String qtdEstoque;
-    private String estoqueMin;
+    private String gtin;
+    private Double precoVenda;
+    private Double precoCompra;
+    private Integer qtdEstoque;
+    private Integer estoqueMin;
     private Categoria categoria;
     private Fornecedor fornecedor;
 
-    public Produto(Integer id, String nome, Integer gtin, String precoVenda, String precoCompra, String qtdEstoque, String estoqueMin) {
-        this.id = id;
+    public Produto(Integer idProduto, String nome, String gtin, Double precoVenda, Double precoCompra, Integer qtdEstoque, Integer estoqueMin, Categoria categoria, Fornecedor fornecedor) {
+        this.idProduto = idProduto;
         this.nome = nome;
         this.gtin = gtin;
         this.precoVenda = precoVenda;
@@ -23,78 +23,68 @@ public class Produto {
         this.fornecedor = fornecedor;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdProduto() {
+        return idProduto;
     }
-
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdProduto(Integer idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNome() {
         return nome;
     }
-
     public void setNome(String nome) {
         this.nome = nome;
     }
 
-    public Integer getGtin() {
+    public String getGtin() {
         return gtin;
     }
-
-    public void setGtin(Integer gtin) {
+    public void setGtin(String gtin) {
         this.gtin = gtin;
     }
 
-    public String getPrecoVenda() {
+    public Double getPrecoVenda() {
         return precoVenda;
     }
-
-    public void setPrecoVenda(String precoVenda) {
+    public void setPrecoVenda(Double precoVenda) {
         this.precoVenda = precoVenda;
     }
 
-    public String getPrecoCompra() {
+    public Double getPrecoCompra() {
         return precoCompra;
     }
+    public void setPrecoCompra(Double precoCompra) {this.precoCompra = precoCompra;}
 
-    public void setPrecoCompra(String precoCompra) {
-        this.precoCompra = precoCompra;
-    }
-
-    public String getQtdEstoque() {
+    public Integer getQtdEstoque() {
         return qtdEstoque;
     }
-
-    public void setQtdEstoque(String qtdEstoque) {
+    public void setQtdEstoque(Integer qtdEstoque) {
         this.qtdEstoque = qtdEstoque;
     }
 
-    public String getEstoqueMin() {
+    public Integer getEstoqueMin() {
         return estoqueMin;
     }
-
-    public void setEstoqueMin(String estoqueMin) {
+    public void setEstoqueMin(Integer estoqueMin) {
         this.estoqueMin = estoqueMin;
     }
 
-    public Categoria getCategoria() {
-        return Categoria;
-    }
-
+    public Categoria getCategoria() {return categoria;}
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
     public Fornecedor getFornecedor() {
-        return Fornecedor;
+        return fornecedor;
     }
-
     public void setFornecedor(Fornecedor fornecedor) {
         this.fornecedor = fornecedor;
     }
 
-    public void mostrar() {}
+    @Override
+    public String toString() {
+        return "Produto: " + nome + " (código de barras:" + gtin + ")";
+    }
 
 }

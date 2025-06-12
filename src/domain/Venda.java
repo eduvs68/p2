@@ -11,29 +11,14 @@ public class Venda {
         this.valorTotal = valorTotal;
     }
 
-    public Integer getIdVenda() {
-        return idVenda;
-    }
+    public Integer getIdVenda() {return idVenda;}
+    public void setIdVenda(Integer idVenda) {this.idVenda = idVenda;}
 
-    public void setIdVenda(Integer idVenda) {
-        this.idVenda = idVenda;
-    }
+    public String getData() {return data;}
+    public void setData(String data) {this.data = data;}
 
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
-    }
-
-    public Double getValorTotal() {
-        return valorTotal;
-    }
-
-    public void setValorTotal(Double valorTotal) {
-        this.valorTotal = valorTotal;
-    }
+    public Double getValorTotal() {return valorTotal;}
+    public void setValorTotal(Double valorTotal) {this.valorTotal = valorTotal;}
 
     public void mostrar() {}
 

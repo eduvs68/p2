@@ -1,7 +1,6 @@
 package DAO;
 
-import domain.AjusteEstoque;
-import domain.Produto;
+import domain.*;
 import util.Conexao;
 
 import java.sql.*;
@@ -10,125 +9,48 @@ import java.util.List;
 
 public class AjusteEstoqueDAO {
 
-    public boolean inserir(AjusteEstoque ajuste) {
-        String sql = "INSERT INTO AjusteEstoque (idProduto, data, tipo, quantidade, descricao) " +
-                "VALUES (?, ?, ?, ?, ?)";
+    private ProdutoDAO produtoDAO = new ProdutoDAO();
 
+    public void inserir(AjusteEstoque a) {
+        String sql = "INSERT INTO AjusteEstoque (idProduto, data, tipo, quantidade, descricao) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-
-            stmt.setInt(1, ajuste.getProduto().getIdProduto());
-            stmt.setString(2, ajuste.getData());
-            stmt.setString(3, ajuste.getTipo());
-            stmt.setInt(4, ajuste.getQuantidade());
-            stmt.setString(5, ajuste.getDescricao());
-
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, a.getProduto().getIdProduto());
+            stmt.setString(2, a.getData());
+            stmt.setString(3, a.getTipo().getDescricao());
+            stmt.setInt(4, a.getQuantidade());
+            stmt.setString(5, a.getDescricao());
             stmt.executeUpdate();
-
-            ResultSet rs = stmt.getGeneratedKeys();
-            if (rs.next()) {
-                ajuste.setIdAjuste(rs.getInt(1));
-            }
-
-            return true;
-
         } catch (SQLException e) {
             System.out.println("Erro ao inserir ajuste de estoque: " + e.getMessage());
-            return false;
         }
     }
 
-    public List<AjusteEstoque> listarTodos() {
+    public List<AjusteEstoque> listar() {
         List<AjusteEstoque> lista = new ArrayList<>();
-        String sql = "SELECT ae.*, p.* FROM AjusteEstoque ae JOIN Produto p ON ae.idProduto = p.idProduto";
-
+        String sql = "SELECT * FROM AjusteEstoque";
         try (Connection conn = Conexao.conectar();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                Produto produto = new Produto();
-                produto.setIdProduto(rs.getInt("idProduto"));
-                produto.setGtin(rs.getString("gtin"));
-                produto.setProduto(rs.getString("produto"));
-                produto.setPrecoVenda(rs.getDouble("precoVenda"));
-                produto.setPrecoCompra(rs.getDouble("precoCompra"));
-                produto.setQtdEstoque(rs.getInt("qtdEstoque"));
-                produto.setEstoqueMin(rs.getInt("estoqueMin"));
-                produto.setIdCategoria(rs.getInt("idCategoria"));
-                produto.setCnpj(rs.getString("cnpj"));
+                Produto produto = produtoDAO.buscarPorId(rs.getInt("idProduto"));
+                TipoAjusteEstoque tipo = TipoAjusteEstoque.fromDescricao(rs.getString("tipo"));
 
-                AjusteEstoque ajuste = new AjusteEstoque(
-                        rs.getInt("idAjuste"),
+                AjusteEstoque a = new AjusteEstoque(
+                        rs.getInt("idAjsuteEstoque"),
                         produto,
                         rs.getString("data"),
-                        rs.getString("tipo"),
+                        tipo,
                         rs.getInt("quantidade"),
                         rs.getString("descricao")
                 );
-
-                lista.add(ajuste);
+                lista.add(a);
             }
 
         } catch (SQLException e) {
             System.out.println("Erro ao listar ajustes de estoque: " + e.getMessage());
         }
-
         return lista;
-    }
-
-    public AjusteEstoque buscarPorId(int id) {
-        String sql = "SELECT ae.*, p.* FROM AjusteEstoque ae JOIN Produto p ON ae.idProduto = p.idProduto WHERE ae.idAjuste = ?";
-        AjusteEstoque ajuste = null;
-
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                Produto produto = new Produto();
-                produto.setIdProduto(rs.getInt("idProduto"));
-                produto.setGtin(rs.getString("gtin"));
-                produto.setProduto(rs.getString("produto"));
-                produto.setPrecoVenda(rs.getDouble("precoVenda"));
-                produto.setPrecoCompra(rs.getDouble("precoCompra"));
-                produto.setQtdEstoque(rs.getInt("qtdEstoque"));
-                produto.setEstoqueMin(rs.getInt("estoqueMin"));
-                produto.setIdCategoria(rs.getInt("idCategoria"));
-                produto.setCnpj(rs.getString("cnpj"));
-
-                ajuste = new AjusteEstoque(
-                        rs.getInt("idAjuste"),
-                        produto,
-                        rs.getString("data"),
-                        rs.getString("tipo"),
-                        rs.getInt("quantidade"),
-                        rs.getString("descricao")
-                );
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao buscar ajuste de estoque: " + e.getMessage());
-        }
-
-        return ajuste;
-    }
-
-    public boolean deletar(int id) {
-        String sql = "DELETE FROM AjusteEstoque WHERE idAjuste = ?";
-
-        try (Connection conn = Conexao.conectar();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setInt(1, id);
-            stmt.executeUpdate();
-            return true;
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao deletar ajuste de estoque: " + e.getMessage());
-            return false;
-        }
     }
 }
